@@ -1,0 +1,141 @@
+<div class="wrapper">
+   <div>One</div>
+   <div>Two</div>
+   <div>Three</div>
+   <div>Four</div>
+   <div>Five</div>
+</div>
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
+
+
+}Grids grandes, com muitas tracks podem usar a notação repeat() para repetir todas ou uma seção de track listing. Por exemplo a definição de grid a seguir:
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+Você também pode definir o tamanho do conjunto para trilhas criadas na grid implícita com as propriedades grid-auto-rows (en-US) e grid-auto-columns (en-US).
+
+No exemplo abaixo usamos grid-auto-rows para garantir que as trilhas criadas na grid implícita tem 200 pixels de altura.
+DEIXA GRANDE 
+
+<div class="wrapper">
+   <div>One</div>
+   <div>Two</div>
+   <div>Three</div>
+   <div>Four</div>
+   <div>Five</div>
+</div>
+Copy to Clipboard
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px;
+}
+
+PRA ESCREVER DENTRO DO QUADRADO
+Grid tem uma solução para isso com a função minmax() (en-US). No próximo exemplo estou usando minmax() no valor de grid-auto-rows (en-US). Automaticamente as linhas criadas terão uma altura mínima de 100 pixels, e a máxima de auto. Usar auto significa que o tamanho vai olhar para o conteúdo e, assim, esticar para que a linha tenha o espaço necessário.
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+}
+Copy to Clipboard
+<div class="wrapper">
+   <div>One</div>
+   <div>Two
+   <p>I have some more content in.</p>
+
+<p>This makes me taller than 100 pixels.</p>
+</div>
+   <div>Three</div>
+   <div>Four</div>
+   <div>Five</div>
+</div>
+Nesse exemplo eu estou posicionando os primeiros dois itens do nosso grid de três colunas, usando as propriedades grid-column-start (en-US), grid-column-end (en-US), grid-row-start (en-US) e grid-row-end (en-US). Da esquerda para a direita, o primeiro item é posicionado contra a linha da coluna 1, e vai até a linha da coluna 4, que no nosso caso é a linha do extremo direito do grid. Começa na linha 1 e termina na linha 3, tendo uma expansão de duas linhas.
+
+O segundo item inicia na linha da coluna 1, e expande uma linha. Esse é o padrão, então não preciso especificar a linha final. Também vai da linha 3 a linha 5. Os outros itens serão posicionados de acordo com espaço disponível no grid.
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 100px;
+}
+.box1 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+.box2 {
+    grid-column-start: 1;
+    grid-row-start: 3;
+    grid-row-end: 5;
+}
+
+
+Se definimos box1 como display: grid podemos dar uma definição de tracks e ela também se tornará uma grid. Os itens então são dispostos nesse novo grid.
+
+.box1 {
+   grid-column-start: 1;
+   grid-column-end: 4;
+   grid-row-start: 1;
+   grid-row-end: 3;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+}
+
+
+Sobrepondo itens com z-index
+Itens de uma mesma grade podem ocupar uma mesma célula. Se retornarmos ao nosso exemplo com itens dispostos pela linha, podemos fazer com que dois se sobreponham.
+
+<div class="wrapper">
+   <div class="box box1">One</div>
+   <div class="box box2">Two</div>
+   <div class="box box3">Three</div>
+   <div class="box box4">Four</div>
+   <div class="box box5">Five</div>
+</div>
+Copy to Clipboard
+.wrapper {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-auto-rows: 100px;
+}
+.box1 {
+   grid-column-start: 1;
+   grid-column-end: 4;
+   grid-row-start: 1;
+   grid-row-end: 3;
+}
+.box2 {
+   grid-column-start: 1;
+   grid-row-start: 2;
+   grid-row-end: 4;
+}
+
+Manipulando a ordem
+Podemos controlar a ordem na qual os itens irão empilhar-se usando a propriedade z-index. Se box2 recebe um z-index menor que box1 será mostrado abaixo de box1.
+
+.wrapper {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-auto-rows: 100px;
+}
+.box1 {
+   grid-column-start: 1;
+   grid-column-end: 4;
+   grid-row-start: 1;
+   grid-row-end: 3;
+   z-index: 2;
+}
+.box2 {
+   grid-column-start: 1;
+   grid-row-start: 2;
+   grid-row-end: 4;
+   z-index: 1;
+}
